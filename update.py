@@ -96,7 +96,15 @@ with open(filename, "wb") as f:
     f.write(cal.to_ical())     
 
 subprocess.run(["hub", "add", filename], check=True)
-
+diff = subprocess.run(
+    ["hub", "diff", "--stat", "--cached", "*.ics"],
+    check=True,
+    stdout=subprocess.PIPE,
+    encoding="utf-8",
+).stdout
+if not diff:
+    print("Already up to date.")
+    return
 subprocess.run(
         [
             "hub",
