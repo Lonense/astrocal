@@ -42,7 +42,7 @@ def _create_event(event_name, start, end, descrip):
     if(descrip):
         event.add("DESCRIPTION",descrip)
     # UID保证唯一
-    event["UID"] = f"{start}/{end}/Lonense/astrocal"
+    event["UID"] = f"{start}/{event_name}/Lonense/astrocal"
     return event
 
 def _cast_date(v: Any) -> date:
