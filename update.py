@@ -70,7 +70,7 @@ def main():
     cal.add_component(_create_timezone())
     now = datetime.now(ChinaTimezone())
     all_days = []
-    for year in range(2021, now.year+1):
+    for year in range(2021, now.year+2):
         for month in range(1, 13):
             url = requests.get(
                 f'https://www.sstm-sam.org.cn/sam/api/hp/aps?year={year}&month={month}').text
