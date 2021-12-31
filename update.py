@@ -85,6 +85,9 @@ def main():
                         eventTime = event['time'].replace('时', ':').replace('分', '')
                     else:
                         eventTime = event['time'].replace('时', '')
+                    if eventTime[1]==':':
+                        eventTime = '0'+eventTime
+                        
                     start = datetime.fromisoformat(
                         f"{event['date']} {eventTime}")
                     end = datetime.fromisoformat(
