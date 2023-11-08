@@ -105,28 +105,5 @@ def main():
     with open(filename, "wb") as f:
         f.write(cal.to_ical())
 
-
-
-    subprocess.run(["github", "add", filename], check=True)
-    diff = subprocess.run(
-        ["github", "diff", "--stat", "--cached", "*.ics"],
-        check=True,
-        stdout=subprocess.PIPE,
-        encoding="utf-8",
-    ).stdout
-    if not diff:
-        print("Already up to date.")
-        return
-    subprocess.run(
-        [
-            "github",
-            "commit",
-            "-m", "update"
-        ],
-        check=True,
-    )
-    subprocess.run(["github", "push"], check=True)
-
-
 if __name__ == "__main__":
     main()

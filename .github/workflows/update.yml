@@ -26,4 +26,8 @@ jobs:
       - name: Update
         env:
           GITHUB_TOKEN: ${{secrets.TOKEN}}
-        run: python ./update.py   
+        run: |
+          python ./update.py   
+          git add .
+          git commit --quiet -m "Update Calendar Regularly (GitHub Actions)"
+          git push -f origin main
