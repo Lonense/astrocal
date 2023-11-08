@@ -107,9 +107,9 @@ def main():
 
 
 
-    subprocess.run(["hub", "add", filename], check=True)
+    subprocess.run(["github", "add", filename], check=True)
     diff = subprocess.run(
-        ["hub", "diff", "--stat", "--cached", "*.ics"],
+        ["github", "diff", "--stat", "--cached", "*.ics"],
         check=True,
         stdout=subprocess.PIPE,
         encoding="utf-8",
@@ -119,13 +119,13 @@ def main():
         return
     subprocess.run(
         [
-            "hub",
+            "github",
             "commit",
             "-m", "update"
         ],
         check=True,
     )
-    subprocess.run(["hub", "push"], check=True)
+    subprocess.run(["github", "push"], check=True)
 
 
 if __name__ == "__main__":
