@@ -6,7 +6,7 @@ on:
   pull_request:
   workflow_dispatch:
   schedule:
-    - cron: "0 16 L * *"
+    - cron: "0 16 12 * *"
 jobs:
   build:
     runs-on: ubuntu-latest
