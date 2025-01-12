@@ -85,6 +85,7 @@ def main():
                         eventTime = event['time'].replace('时', ':').replace('分', '')
                     else:
                         eventTime = event['time'].replace('时', '')
+                        eventTime = event['time'].replace('h', '')
                     if eventTime[1]==':':
                         eventTime = '0'+eventTime
                         
