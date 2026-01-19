@@ -88,7 +88,7 @@ def main():
                     try:
                         if eventTime[1]==':':
                             eventTime = '0'+eventTime
-                    except e:
+                    except Exception as e: 
                         print(f"time: {eventTime}")
                     try:    
                         start = datetime.fromisoformat(
