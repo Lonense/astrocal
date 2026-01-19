@@ -87,11 +87,14 @@ def main():
                         eventTime = event['time'].replace('时', '').replace('h', '')
                     if eventTime[1]==':':
                         eventTime = '0'+eventTime
-                        
-                    start = datetime.fromisoformat(
+                    try:    
+                        start = datetime.fromisoformat(
                         f"{event['date']} {eventTime}")
-                    end = datetime.fromisoformat(
+                        end = datetime.fromisoformat(
                         f"{event['date']} {eventTime}")
+                    except ValueError:
+                         start = date.fromisoformat(event['date'])
+                         end = date.fromisoformat(event['date'])
                 else:
                     start = date.fromisoformat(event['date'])
                     end = date.fromisoformat(event['date'])
