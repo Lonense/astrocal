@@ -84,7 +84,7 @@ def main():
                     if event['time'][-1] == '分':
                         eventTime = event['time'].replace('时', ':').replace('分', '')
                     else:
-                        eventTime = event['time'].replace('时', '').replace('h', '')
+                        eventTime = event['time'].replace('时', '').replace('h', ':00')
                     try:
                         if eventTime[1]==':':
                             eventTime = '0'+eventTime
