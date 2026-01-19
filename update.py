@@ -80,32 +80,30 @@ def main():
             asph = js['result']['aps'][1]
             for event in asph:
                 name = event['astronomicalPhenomena']
+                descrip = ''
                 if event['time']:
                     if event['time'][-1] == '分':
                         eventTime = event['time'].replace('时', ':').replace('分', '')
                     else:
                         eventTime = event['time'].replace('时', '').replace('h', ':00')
-                    try:
-                        if eventTime[1]==':':
-                            eventTime = '0'+eventTime
-                    except Exception as e: 
-                        print(f"time: {eventTime}")
+                    if eventTime[1]==':':
+                        eventTime = '0'+eventTime
                     try:    
                         start = datetime.fromisoformat(
                         f"{event['date']} {eventTime}")
                         end = datetime.fromisoformat(
                         f"{event['date']} {eventTime}")
                     except ValueError:
-                         start = date.fromisoformat(event['date'])
-                         end = date.fromisoformat(event['date'])
+                        start = date.fromisoformat(event['date'])
+                        end = date.fromisoformat(event['date'])
                 else:
                     start = date.fromisoformat(event['date'])
                     end = date.fromisoformat(event['date'])
+                    descrip = eventTime
 
                 if(event['summary']):
-                    descrip = event['summary']
-                else:
-                    descrip = None
+                    if descrip:
+                        descrip = descrip+' '+event['summary']
                 cal.add_component(_create_event(name, start, end, descrip))
 
     with open(filename, "wb") as f:
