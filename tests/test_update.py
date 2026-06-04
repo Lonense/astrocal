@@ -22,6 +22,8 @@ def test_parse_event_time_without_time_returns_date():
 def test_event_uid_is_stable_for_same_event():
     start = datetime(2026, 1, 2, 3, 5)
     first_event = _create_event("蜂巢星团合月", start, start, "蜂巢星团在月球以南2.7度")
-    second_event = _create_event("蜂巢星团合月", start, start, "蜂巢星团在月球以南2.7度")
+    second_event = _create_event(
+        "蜂巢星团合月", start, start, "蜂巢星团在月球以南2.7度"
+    )
 
     assert first_event["UID"] == second_event["UID"]
