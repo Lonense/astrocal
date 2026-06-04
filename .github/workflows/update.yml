@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
   workflow_dispatch:
   schedule:
@@ -10,11 +10,13 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
         with:
-          python-version: '3.x'
+          python-version: "3.x"
 
       - name: Setup git user
         run: |
@@ -23,11 +25,15 @@ jobs:
 
       - name: Install dependencies
         run: pip install -r requirements.txt -r dev-requirements.txt
+      - name: Lint
+        run: make lint
+      - name: Test
+        run: make test
       - name: Update
-        env:
-          GITHUB_TOKEN: ${{secrets.TOKEN}}
+        if: github.event_name != 'pull_request'
         run: |
-          python ./update.py   
+          python ./update.py
           git add .
+          git diff --cached --quiet && exit 0
           git commit --quiet -m "Update Calendar Regularly (GitHub Actions)"
-          git push -f origin main
+          git push origin main
