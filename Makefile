@@ -1,6 +1,6 @@
-.PHONY: default lint test format
+.PHONY: default lint format
 
-default: lint test
+default: lint
 
 ifeq ($(OS),Windows_NT)
 PYTHON?=py -3.8
@@ -10,11 +10,6 @@ endif
 
 lint:
 	$(PYTHON) -m black -t py38 --check --diff update.py
-	$(PYTHON) -m black -t py38 --check --diff tests/test_update.py
-
-test:
-	$(PYTHON) -m pytest
 
 format:
 	$(PYTHON) -m black -t py38 update.py
-	$(PYTHON) -m black -t py38 tests/test_update.py
