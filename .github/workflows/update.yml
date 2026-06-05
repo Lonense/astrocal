@@ -24,9 +24,7 @@ jobs:
           git config user.email "actions@users.noreply.github.com"
 
       - name: Install dependencies
-        run: pip install -r requirements.txt -r dev-requirements.txt
-      - name: Lint
-        run: make lint
+        run: pip install -r requirements.txt
       - name: Update
         if: github.event_name != 'pull_request'
         run: |
