@@ -25,10 +25,13 @@ jobs:
 
       - name: Install dependencies
         run: pip install -r requirements.txt
+      - name: Install Playwright browser
+        run: playwright install --with-deps chromium
       - name: Update
         if: github.event_name != 'pull_request'
         run: |
           python ./update.py
+          python ./stellarium_update.py
           git add .
           git diff --cached --quiet && exit 0
           git commit --quiet -m "Update Calendar Regularly (GitHub Actions)"
