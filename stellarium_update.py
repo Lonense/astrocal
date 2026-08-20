@@ -10,7 +10,8 @@ CALENDAR_URL = "https://stellarium-web.org/p/calendar"
 CALENDAR_FILENAME = "stellarium.ics"
 CALENDAR_NAME = "Stellarium Web 天象日历"
 CALENDAR_DESCRIPTION = "自动抓取 stellarium-web.org 的天象计算结果"
-START_YEAR = 2021
+YEARS_BEFORE = 2
+YEARS_AFTER = 2
 PAGE_LOAD_TIMEOUT = 60_000
 INIT_TIMEOUT = 120_000
 STELLARIUM_UID_NAMESPACE = uuid.uuid5(
@@ -107,10 +108,12 @@ def _create_calendar() -> Calendar:
 
 
 def build_calendar(
-    start_year: int = START_YEAR, end_year: Optional[int] = None
+    start_year: Optional[int] = None, end_year: Optional[int] = None
 ) -> Calendar:
-    end_year = end_year or datetime.now(timezone.utc).year + 2
-    raw_events = _fetch_events(start_year, end_year)
+    current_year = datetime.now(timezone.utc).year
+    start_year = start_year or current_year - YEARS_BEFORE
+    end_year = end_year or current_year + YEARS_AFTER
+    raw_events = _fetch_events(start_year, end_year + 1)
 
     cal = _create_calendar()
     for raw in raw_events:
