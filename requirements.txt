@@ -1,5 +1,0 @@
-requests>=2.32,<3
-icalendar>=6,<7
-skyfield>=1.55,<2
-pandas>=2,<3
-numpy>=1.26,<3

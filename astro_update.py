@@ -630,7 +630,7 @@ def _moon_appulse_events(ts, eph, t0, t1) -> List[RawEvent]:
             )
             if sep_deg >= MOON_APPULSE_THRESHOLD_DEG:
                 continue
-            events.append((t.utc_datetime(), "moon-planet-appulse", f"月合{name}"))
+            events.append((t.utc_datetime(), "moon-planet-appulse", f"{name}合月"))
     return events
 
 
@@ -896,7 +896,7 @@ def _moon_cluster_conjunction_events(
             if sep_deg >= MOON_STAR_APPULSE_THRESHOLD_DEG:
                 continue
             events.append(
-                (t.utc_datetime(), "moon-star-appulse", f"月合{cluster_name}")
+                (t.utc_datetime(), "moon-star-appulse", f"{cluster_name}合月")
             )
     return events
 
@@ -983,7 +983,7 @@ def _bright_star_conjunction_events(
             )
             if sep_deg >= MOON_STAR_APPULSE_THRESHOLD_DEG:
                 continue
-            events.append((t.utc_datetime(), "moon-star-appulse", f"月合{star_name}"))
+            events.append((t.utc_datetime(), "moon-star-appulse", f"{star_name}合月"))
 
         for planet_name, key in _ALL_PLANETS.items():
             planet = eph[key]
