@@ -4,7 +4,7 @@ import os
 import re
 import shutil
 import uuid
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from typing import Dict, List, Optional, Tuple
 
 import numpy as np
@@ -1175,6 +1175,17 @@ def _collect_events(cache_dir: str, start_year: int, end_year: int) -> List[RawE
     return events
 
 
+def _round_to_minute(dt: datetime) -> datetime:
+    # ICS DTSTART is written with second precision, but calendar UIs only
+    # display down to the minute -- i.e. they truncate, not round. Rounding
+    # here instead keeps the displayed time within +-30s of the true instant,
+    # rather than the always-early truncation bias.
+    dt = dt.replace(microsecond=0)
+    if dt.second >= 30:
+        dt += timedelta(minutes=1)
+    return dt.replace(second=0)
+
+
 def _event_uid(desc: str, start: datetime) -> str:
     identity = "|".join((desc, start.isoformat()))
     return f"{uuid.uuid5(ASTRO_UID_NAMESPACE, identity)}@astrocal"
@@ -1214,7 +1225,7 @@ def build_calendar(
 
     cal = _create_calendar()
     for start, event_type, desc in raw_events:
-        cal.add_component(_create_event(desc, event_type, start))
+        cal.add_component(_create_event(desc, event_type, _round_to_minute(start)))
 
     return cal
 
